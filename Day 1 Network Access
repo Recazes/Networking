@@ -1,0 +1,164 @@
+Based on the OSI model 
+  covering layer 1 & 2 today
+data refrences the application layer
+transport = segment/datagram
+packets refrences network
+data link = frame
+bits refrences the physical
+
+******reliable sources******
+IETF
+  makes RFC   
+    basically whitepages or manuals for protocols
+IANA
+  passes out ip ranges
+  manages root domains ie; .com , .net
+IEEE
+  hardware standards for the internet
+*********************************
+      chat gpt copy pastes for pattern rec not nesecarrily the truth
+
+
+************LAYER 1******************8
+Binary
+  base 2 
+  zeroes and ones
+    32 bits = word
+    4 bits is a nibble
+Decimal
+  base 10 
+  school math
+Hexadecimal
+  0-F
+  format; 0x42, 0xE3, etc...
+  0  = 0
+  15 = F
+one hex character is a nibble
+2 hex is a byte
+
+Base64
+  (A-Z, a-z, 0-9, +, /)
+  (=) designates null values
+    used for padding
+Topologies
+  Bus
+    not commonly used similiar to in series electronics
+  Star
+    several hosts connected indiviually to a switch 
+  Ring
+    several hosts connected to eachother in a ring pattern
+      data is sent one way in a loop
+  Mesh
+    everyone connected to everybody
+      1 hop max
+    partial mesh 
+      1 or 2 hops away
+  Wireless
+    WAP 
+      sphere of hosts that hosts can move between
+  Hierarchial 
+    Enterprise level network
+    split into 
+      Access layer
+      Distribution layer
+      Core layer
+      Internet
+Devices
+  Hub
+    copy all info to every port
+    shitty switch but fast
+  Repeaters
+    amplifies and push info allong a connection while removing noise  
+  switches
+    same network
+    seperates collsion domains via mac addresses
+    move information around inside a network
+  Routers
+    operate at IP level 
+    designed to move information across networks
+    usually the default gateway in a network
+*************************************************************************
+
+*************LAYER 2*********************************************
+Ethernet 802.3(x) 
+Wireless 802.11(x)
+Token Ring 802.5
+
+Data link sublayers
+  MAC (Medium Acces Control)
+  LLC (logical link control)
+
+Message Formating (FRAMES)
+  Header
+  Data
+  Footer/trailer
+Encapsulation
+  like russian nesting dolls
+  used to take the data basically give it an address and the method of movement to the target and maybe encryption
+
+Switches
+  build MAC adrress table (cam table)
+    builds out table through incoming packets
+  Fowards Frames
+    pushes traffic based on destination MAC
+
+  Switching Modes
+    Cut-Through
+      fastes method used for end user
+    Fragment-Free
+      makes sure whole frame is there before pushing
+    Store-And-Forward
+      slowest but no mistakes
+
+    CAM Table Overflowo Attack
+      frames with bogus MAC Address 
+      fills CAM table with garbage     
+      switch will not be able to learn new MAC or overwrites old ones
+      DOS
+
+  MAC Addressing
+    Format
+      Windows: 01-23-45.....
+      Linux/UNIX: 01:23:45.....
+      CISCO: 1234.5612......
+    Parts  
+      first 24 bits = OUI
+      LAST 24 = vendor assigned
+    MAC spoofing
+      the act of changing a mac address through software, typically to hide tracks
+  VLAN
+    Virtual local area network
+    splits a network so that hosts are seperated usually by trust level or access level
+    Trunk Link
+      physical cable that allows multiple vlans to cross multiple switches
+
+    VLAN TYPES
+      Default - VLAN 1
+      Data - User Traffic
+      Voice- VOIP Traffic
+      Management- Switch and router management
+        default built but often not visible
+        often outband with access to everyone and noone access to them 
+      Native - untagged switch and router traffic
+
+    VLAN Hopping attack
+      can push into a vlan with lesser credentials by using another VLAN as cover
+      also known as double Tagging 
+
+Protocols 
+  ARP
+    ARP TYPES
+      ARP (op 1 and 2)
+      RARP (op 3 and 4)
+      Proxy ARP (op 2)
+        third party response to a request often used for man in the middle
+      Gratuitous ARP (op 2)
+        unsolicted ARP response
+        often seen with Table poisoning
+     ARP Cache
+      where your mac to IP resolution is stored
+      usually internetwork
+      bare minimum has Default gateway
+      easily duplicated
+    
+      
