@@ -1,1 +1,63 @@
 
+######Stream Socket Sender Demo#######
+
+#!/usr/bin/python3
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+ip_addr = '127.0.0.1'
+port = 1111
+s.connect((ip_addr, port))
+message = b"Message"
+s.send(message)
+data, conn = s.recvfrom(1024)
+print(data.decode('utf-8'))
+s.close()
+
+############################################
+
+
+########Datagram Socket Sender Demo##########
+#!/usr/bin/python3
+import socket
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+ip_addr = '127.0.0.1'
+port = 2222
+message = b"Message"
+s.sendto(message, (ip_addr, port))
+data, addr = s.recvfrom(1024)
+print(data.decode())
+###################################
+Hex Encoding and Decoding
+  Encode text to Hex:
+
+    echo "Message" | xxd
+
+  Encode file to Hex:
+
+    xxd file.txt file-encoded.txt
+
+  Decode file from Hex:
+
+    xxd -r file-encoded.txt file-decoded.txt
+
+
+Base64 Encoding and Decoding 
+  Encode text to base64:
+
+    echo "Message" | base64
+  
+  Endode file to Base64:
+  
+    base64 file.txt > file-encoded.txt
+  
+  Decode file from Base64:
+  
+    base64 -d file-encoded.txt > file-decoded.txt
+
+
+
+
+
+
+
+
