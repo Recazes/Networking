@@ -11,4 +11,4 @@ Float
 
     Command: ssh student@10.50.32.44 -X
 
-    Password: passwords
+    Password: password
