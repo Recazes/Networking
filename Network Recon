@@ -1,0 +1,165 @@
+Dig vs Whois
+
+    Whois - queries DNS registrar over TCP port 43
+
+        Information about the owner who registered the domain
+
+    Dig - queries DNS server over UDP port 53
+
+        Name to IP records
+Whois
+  'whois "zonetransfer.me"'
+
+Dig
+  dig 'zonetransfer.me' A
+  dig 'zonetransfer.me' AAAA
+  dig 'zonetransfer.me' MX
+  dig 'zonetransfer.me' TXT
+  dig 'zonetransfer.me' NS
+  dig 'zonetransfer.me' SOA
+
+
+
+Zone Transfer
+  Between Primary and Secondary DNS over TCP port 53
+    https://digi.ninja/projects/zonetransferme.php
+
+  dir axfr {@soa.server} {target-site}
+  dig axfr @nsztm1.digi.ninja zonetransfer.me
+
+Google Searches
+  Advanced searches.
+    Dork Search
+      site:*.ccboe.net
+      site:*.ccboe.net "administrator"
+
+*****************This class only ********************
+
+ports of intresest for scanning are '20-23, 80'
+
+*****************************************************
+Ping Sweep
+  Ping one IP:
+    ping 172.16.82.106 -c 1
+  Ping a range:
+    for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+
+NMAP Defaults
+  Default Scan:
+    User: TCP Full Connect Scan (-sT)
+    Root: TCP SYN Scan (-sS)
+  Default Ports scanned: 1000 most commonly used TCP or UDP ports
+
+NMAP Port States
+  open
+  closed
+  filtered
+  unfiltered
+  open|filtered
+  closed|filtered
+
+NMAP Scan Types
+  Broadcast Ping/Ping sweep (-sP, -PE)
+  SYN scan (-sS)
+  Full connect scan (-sT)
+  Null scan (-sN)
+  FIN scan (-sF)
+  XMAS tree scan (-sX)
+  UDP scan (-sU)
+  Idle scan (-sI)
+  Decoy scan (-D)
+  ACK/Window scan (-sA)
+  RPC scan (-sR)
+  FTP scan (-b)
+  OS fingerprinting scan (-O)
+  Version scan (-sV)
+  Discovery probes
+    ***nmap -PE 172.16.82.106/27***
+  tunnel is being fucky wucky with nmap scan throw on -Pn (no ping)
+  --open = will show only open ports
+
+NMAP - Time-Out
+  -T0 - Paranoid - 300 Sec
+  -T1 - Sneaky - 15 Sec
+  -T2 - Polite - 1 Sec
+  -T3 - Normal - 1 Sec
+  -T4 - Aggresive - 500 ms
+  -T5 - Insane - 250 ms (likely to give false negatives)
+
+Traceroute - Firewalking
+  traceroute 172.16.82.106
+  traceroute 172.16.82.106 -p 123
+  sudo traceroute 172.16.82.106 -I
+  sudo traceroute 172.16.82.106 -T
+  sudo traceroute 172.16.82.106 -T -p 443
+    -I = icmp
+    -T = tcp
+
+
+Netcat - Scanning
+nc [Options] [Target IP] [Target Port(s)]
+    -z : Port scanning mode i.e. zero I/O mode
+    -v : Be verbose [use twice -vv to be more verbose]
+    -n : do not resolve ip addresses
+    -w1 : Set time out value to 1
+    -u : To switch to UDP 
+
+
+Netcat - Banner Grabbing
+  Find what is running on a particular port
+    nc [Target IP] [Target Port]
+    nc 172.16.82.106 22
+    nc -u 172.16.82.106 53
+       -u : To switch to UDP
+
+Curl and Wget
+    Both can be used to interact with the HTTP, HTTPS and FTP protocols.
+    Curl - Displays ASCII
+      curl http://172.16.82.106
+      curl ftp://172.16.82.106
+
+    Wget - Downloads (-r recursive)
+      wget -r http://172.16.82.106
+      wget -r ftp://172.16.82.106
+
+ARP Cache
+  Windows: arp -a
+  Linux: ip neighbor (arp -a depreciated)
+
+
+Windows: netstat
+Linux: ss (netstat depreciated)
+  Example options useful for both netstat and ss: -antp
+    a = Displays all active connections and ports.
+    n = No determination of protocol names. Shows 22 not SSH.
+    t = Display only TCP connections.
+    u = Display only UDP connections.
+    p = Shows which processes are using which sockets.
+
+
+Services File
+  Windows: %SystemRoot%\system32\drivers\etc\services
+  Linux/Unix: /etc/services
+
+OS Information
+  Windows: systeminfo
+  Linux: uname -a and /etc/os-release
+
+Routing Table
+  Windows: route print
+  Linux: ip route (netstat -r deprecated)
+  VyOS: show ip route
+
+File search
+  find / -name hint* 2> /dev/null
+  find / -iname flag* 2> /dev/null
+
+******scanning without tools*******
+Ping Scan 
+  for i in {1..254}; do (ping -c 1 172.16.82.$i | grep "bytes from" &) ; done
+
+DEV TCP Banner Grab
+  exec 3<>/dev/tcp/172.16.82.106/22; echo -e "" >&3; cat <&3
+
+DEV TCP Scanning
+  for p in {1..1023}; do(echo >/dev/tcp/172.16.82.106/$p) >/dev/null 2>&1 && echo "$p open"; done
