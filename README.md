@@ -22,3 +22,6 @@ Entry Float IP: 10.50.26.58
     Credentials: net1_studentX:passwordX
 
     X is your student number
+
+for mapping 
+  draw.io
