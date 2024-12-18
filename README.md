@@ -25,3 +25,6 @@ Entry Float IP: 10.50.26.58
 
 for mapping 
   draw.io
+
+Avatar float
+10.50.20.250
