@@ -1,0 +1,98 @@
+T1
+sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state NEW -j ACCEPT
+sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state NEW -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state NEW -j ACCEPT
+sudo iptables -A INPUT -p udp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state NEW -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --ports 22,23,80,8080,3389,6579,4444 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -s 10.10.0.40 -d 172.16.82.106 -p icmp --icmp-type echo-request -j ACCEPT
+sudo iptables -A INPUT -s 172.16.82.106 -d 10.10.0.40 -p icmp --icmp-type echo-request -j ACCEPT
+sudo iptables -A OUTPUT -s 10.10.0.40 -d 172.16.82.106 -p icmp --icmp-type echo-request -j ACCEPT
+sudo iptables -A OUTPUT -s 172.16.82.106 -d 10.10.0.40 -p icmp --icmp-type echo-request -j ACCEPT
+sudo iptables -A INPUT -s 10.10.0.40 -d 172.16.82.106 -p icmp --icmp-type echo-reply -j ACCEPT
+sudo iptables -A INPUT -s 172.16.82.106 -d 10.10.0.40 -p icmp --icmp-type echo-reply -j ACCEPT
+sudo iptables -A OUTPUT -s 10.10.0.40 -d 172.16.82.106 -p icmp --icmp-type echo-reply -j ACCEPT
+sudo iptables -A OUTPUT -s 172.16.82.106 -d 10.10.0.40 -p icmp --icmp-type echo-reply -j ACCEPT
+sudo iptables -P INPUT DROP
+sudo iptables -P OUTPUT DROP
+sudo iptables -P FORWARD DROP
+
+flag: 467accfb25050296431008a1357eacb1
+
+T2
+sudo nft add table CCTC 
+sudo nft add chain CCTC input {type filter hook input priority 0 \; policy accept  \;}
+sudo nft add chain CCTC output {type filter hook output priority 0 \; policy accept  \;}
+sudo nft add rule CCTC input tcp sport { 22,23,3389,5050,5150,80 } ct state { new,established } accept
+sudo nft add rule CCTC input tcp dport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC input udp sport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC input udp dport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC output tcp sport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC output tcp dport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC output udp sport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+sudo nft add rule CCTC output udp dport { 22,23,3389,5050,5150,80, } ct state { new,established } accept
+
+
+sudo nft add rule CCTC output ip daddr 10.10.0.40 icmp type { echo-reply } accept
+sudo nft add rule CCTC output ip daddr 10.10.0.40 icmp type { echo-request } accept
+sudo nft add rule CCTC input ip saddr 10.10.0.40 icmp type { echo-reply } accept
+sudo nft add rule CCTC input ip saddr 10.10.0.40 icmp type { echo-request } accept
+
+
+sudo nft add chain CCTC input { \; policy drop \; }
+sudo nft add chain CCTC output { \; policy drop \; }
+
+flag: 9f7a33941828bdafd2755fd20176cdf4
+
+T3
+
+sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,80,3389 -m state --state NEW -j ACCEPT
+sudo iptables -A INPUT -p tcp -m multiport --ports 22,23,80,3389 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,80,3389 -m state --state NEW -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --ports 22,23,80,3389 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p udp -m multiport --ports 22,23,80,3389 -m state --state NEW -j ACCEPT
+sudo iptables -A INPUT -p udp -m multiport --ports 222,23,80,3389 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --ports 22,23,80,3389 -m state --state NEW -j ACCEPT
+sudo iptables -A OUTPUT -p udp -m multiport --ports 22,23,80,3389 -m state --state ESTABLISHED -j ACCEPT
+sudo iptables -P INPUT DROP
+sudo iptables -P OUTPUT DROP
+sudo iptables -P FORWARD DROP
+
+
+flag: 05e5fb96e2a117e01fc1227f1c4d664c
+
+combo_flag:953e720e688941b15b72c098022c51c3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
