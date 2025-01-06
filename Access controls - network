@@ -21,3 +21,11 @@ Construct advanced IDS (snort) rules
     /etc/snort/snort.conf
   Rules Directory
     /etc/snort/rules
+
+Snort rule example
+
+  Look for anonymous ftp traffic:
+        alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; sid:2121; )
+     
+  This will cause the pattern matcher to start looking at byte 6 in the payload)
+        alert tcp any any -> any 21 (msg:"Anonymous FTP Login"; content: "anonymous"; offset:5; sid:2121; )
