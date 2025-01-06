@@ -1,1 +1,23 @@
+Snort IDS/IPS rule - Header
+  [action] [protocol] [s.ip] [s.port] [direction] [d.ip] [d.port] ( match conditions ;)
+    * Action - alert, log, pass, drop, or reject
+    * Protocol - TCP, UDP, ICMP, or IP
+    * Source IP address - one IP, network, [IP range], or any
+    * Source Port - one, [multiple], any, or [range of ports]
+    * Direction - source to destination or both
+    * Destination IP address - one IP, network, [IP range], or any
+    * Destination port - one, [multiple], any, or [range of ports]
 
+To run snort as a Daemon
+  sudo snort -D -c /etc/snort/snort.conf -l /var/log/snort
+
+To run snort against a PCAP
+  sudo snort -c /etc/snort/rules/file.rules -r file.pcap
+
+Construct advanced IDS (snort) rules
+  Installation Directory
+    /etc/snort
+  Configuration File
+    /etc/snort/snort.conf
+  Rules Directory
+    /etc/snort/rules
